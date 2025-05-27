@@ -2,8 +2,9 @@ import type { GetServerSideProps } from 'next';
 import axios from 'axios';
 import SectionHeader from 'components/SectionHeader/SectionHeader';
 // import Pagination from 'components/Pagination/Pagination';
-import HomeTable from './home/HomeTable';
+import HomeTable from 'components/HomeTable/HomeTable';
 import SEO from 'components/SEO/SEO';
+import type { CoinData } from 'types/coinData'; 
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	try {
@@ -33,24 +34,24 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	}
 };
 
-export interface CoinData {
-  market_cap_rank: number;
-  id: string;
-  name: string;
-  circulating_supply: number;
-  max_supply: number | null; // <-- ADD THIS
-  symbol: string;
-  image: string;
-  market_cap: number;
-  price_change_percentage_1h_in_currency: number;
-  price_change_percentage_24h_in_currency: number;
-  price_change_percentage_7d_in_currency: number;
-  current_price: number;
-  total_volume: number;
-  sparkline_in_7d: {
-    price: number[];
-  };
-}
+// export interface CoinData {
+//   market_cap_rank: number;
+//   id: string;
+//   name: string;
+//   circulating_supply: number;
+//   max_supply: number | null; // <-- ADD THIS
+//   symbol: string;
+//   image: string;
+//   market_cap: number;
+//   price_change_percentage_1h_in_currency: number;
+//   price_change_percentage_24h_in_currency: number;
+//   price_change_percentage_7d_in_currency: number;
+//   current_price: number;
+//   total_volume: number;
+//   sparkline_in_7d: {
+//     price: number[];
+//   };
+// }
 
 interface HomeProps {
 	coins?: CoinData[];

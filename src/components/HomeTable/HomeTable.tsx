@@ -1,4 +1,4 @@
-import Table from '../../components/Table/Table';
+import Table from '../Table/Table';
 import type { TableColumn } from 'components/Table/Table';
 import { Sparklines, SparklinesLine } from 'react-sparklines';
 import * as S from './HomeTable.styled';
@@ -7,7 +7,7 @@ import Image from 'next/image';
 import PercentageChange from 'components/PercentageChange/PercentageChange';
 import { useEffect, useMemo, useState } from 'react';
 import { startsWithHttp } from 'utils/formatLink';
-import type { CoinData } from '../index';
+import type { CoinData } from 'types/coinData';
 import { formatLargeValue, formatPrice } from 'utils/formatValues';
 import { useTheme } from 'styled-components';
 import { getCoinIdBySymbol } from 'utils/getCoinIdBySymbol';

@@ -1,12 +1,15 @@
 import React, {
 	useContext,
 	useReducer,
-	PropsWithChildren,
+	// PropsWithChildren,
 	createContext,
-	Dispatch,
+	// Dispatch,
 } from 'react';
+import type { PropsWithChildren, Dispatch } from 'react';
+import type { DefaultTheme } from 'styled-components';
+
 import {
-	DefaultTheme,
+	// DefaultTheme,
 	ThemeProvider as StyledThemeProvider,
 } from 'styled-components';
 import { lightTheme, darkTheme } from './themes';
