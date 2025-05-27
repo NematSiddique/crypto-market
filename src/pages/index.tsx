@@ -21,18 +21,47 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 				},
 			})
 		).data;
-		console.log('coins', coins);
+
 		return {
 			props: {
 				coins,
 			},
 		};
-	} catch (errror) {
+	} catch (error) {
+		console.error('Error fetching coins:', error); // <-- Add this
 		return {
 			props: {},
 		};
 	}
 };
+
+// export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+// 	try {
+// 		const coins = (
+// 			await axios.get(`${process.env.API_URL}/coins/markets`, {
+// 				params: {
+// 					vs_currency: 'usd',
+// 					order: 'market_cap_desc',
+// 					ids: 'bitcoin, ethereum, tether, ripple, binancecoin, solana',
+// 					per_page: 6,
+// 					sparkline: true,
+// 					page: query.page ?? 1,
+// 					price_change_percentage: '1h,24h,7d',
+// 				},
+// 			})
+// 		).data;
+// 		console.log('coins', coins);
+// 		return {
+// 			props: {
+// 				coins,
+// 			},
+// 		};
+// 	} catch (errror) {
+// 		return {
+// 			props: {},
+// 		};
+// 	}
+// };
 
 // export interface CoinData {
 //   market_cap_rank: number;
