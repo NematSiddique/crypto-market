@@ -13,7 +13,7 @@ export const PercentageWrapper = styled.span<PercentageWrapperProps>`
 	font-weight: 600;
 	color: ${({ positive, theme: { colors } }) =>
 		positive ? colors.upColor : colors.downColor};
-	margin-left: ${({ marginLeft }) => marginLeft + 'px'};
+	margin-left: ${({ marginLeft }) => `${marginLeft}px`};
 	${({ filled, positive, theme: { colors } }) =>
 		filled &&
 		css`

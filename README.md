@@ -37,7 +37,7 @@ Crypto Market is a cryptocurrency market overview application that provides live
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/tax-market-cap.git
+   git clone https://github.com/NematSiddique/crypto-market.git
    cd crypto-market
    ```
 

@@ -23,7 +23,7 @@ interface TableProps<T> {
 }
 
 
-const Table = <T extends unknown>({ data, columns }: TableProps<T>) => {
+const Table = <T,>({ data, columns }: TableProps<T>) => {
 	const table = useReactTable({
 		data,
 		columns,

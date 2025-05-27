@@ -10,6 +10,8 @@ import { startsWithHttp } from 'utils/formatLink';
 import type { CoinData } from '../index';
 import { formatLargeValue, formatPrice } from 'utils/formatValues';
 import { useTheme } from 'styled-components';
+import { getCoinIdBySymbol } from 'utils/getCoinIdBySymbol';
+
 // import useMainWatchlist from 'hooks/useMainWatchlist';
 
 // ⭐ New imports for progress bar and tooltip
@@ -34,69 +36,127 @@ const HomeTable = ({ initialCoins }: HomeTableProps) => {
     initialCoins.map((coin) => ({ ...coin, isOnWatchlist: false, flashColor: null }))
   );
 
-  const getCoinIdBySymbol = (symbol: string) => {
-    const lowerSymbol = symbol.toLowerCase();
-    if (lowerSymbol === 'btcusdt') return 'bitcoin';
-    if (lowerSymbol === 'ethusdt') return 'ethereum';
-    if (lowerSymbol === 'bnbusdt') return 'binancecoin';
-    if (lowerSymbol === 'xrpusdt') return 'ripple';
-    if (lowerSymbol === 'adausdt') return 'cardano';
-    if (lowerSymbol === 'solusdt') return 'solana';
-    return null;
-  };
+  // const getCoinIdBySymbol = (symbol: string) => {
+  //   const lowerSymbol = symbol.toLowerCase();
+  //   if (lowerSymbol === 'btcusdt') return 'bitcoin';
+  //   if (lowerSymbol === 'ethusdt') return 'ethereum';
+  //   if (lowerSymbol === 'bnbusdt') return 'binancecoin';
+  //   if (lowerSymbol === 'xrpusdt') return 'ripple';
+  //   if (lowerSymbol === 'adausdt') return 'cardano';
+  //   if (lowerSymbol === 'solusdt') return 'solana';
+  //   return null;
+  // };
+
+  // useEffect(() => {
+  //   const binanceWsUrl=process.env.NEXT_PUBLIC_BINANCE_WS;
+  //   if (!binanceWsUrl) {
+  //     console.error('Binance WebSocket URL is not defined in the environment variables.');
+  //     return;
+  //   }
+  //   const ws = new WebSocket(
+  //     `${binanceWsUrl}/stream?streams=btcusdt@trade/ethusdt@trade/bnbusdt@trade/xrpusdt@trade/adausdt@trade`
+  //   );
+  //   ws.onmessage = (event) => {
+  //     const message = JSON.parse(event.data);
+  //     if (!message.data) return;
+  //     const { s: symbol, p: price } = message.data;
+  //     const matchedId = getCoinIdBySymbol(symbol);
+  //     if (!matchedId) return;
+
+  //     setCoins((prevCoins) =>
+  //       prevCoins.map((coin) => {
+  //         if (coin.id !== matchedId) return coin;
+
+  //         const oldPrice = coin.current_price;
+  //         const newPrice = Number.parseFloat(price);
+  //         const priceDiff = newPrice - oldPrice;
+
+  //         if (priceDiff === 0) return coin;
+
+  //         const randomMultiplier = Math.random() * (1.1 - 0.9) + 0.9;
+  //         const sign = priceDiff > 0 ? 1 : -1;
+
+  //         return {
+  //           ...coin,
+  //           current_price: newPrice,
+  //           flashColor: priceDiff > 0 ? 'green' : 'red',
+  //           price_change_percentage_1h_in_currency: (coin.price_change_percentage_1h_in_currency ?? 0) + sign * 0.04 * randomMultiplier,
+  //           price_change_percentage_24h_in_currency: (coin.price_change_percentage_24h_in_currency ?? 0) + sign * 0.02 * randomMultiplier,
+  //           price_change_percentage_7d_in_currency: (coin.price_change_percentage_7d_in_currency ?? 0) + sign * 0.01 * randomMultiplier,
+  //           total_volume: coin.total_volume + Math.abs(priceDiff) * 12000 * randomMultiplier,
+  //         };
+  //       })
+  //     );
+  //     setTimeout(() => {
+  //       setCoins((prevCoins) =>
+  //         prevCoins.map((coin) =>
+  //           coin.id === matchedId ? { ...coin, flashColor: null } : coin
+  //         )
+  //       );
+  //     }, 1200);
+  //   };
+
+  //   return () => ws.close();
+  // }, []);
 
   useEffect(() => {
-    const binanceWsUrl=process.env.NEXT_PUBLIC_BINANCE_WS;
-    if (!binanceWsUrl) {
-      console.error('Binance WebSocket URL is not defined in the environment variables.');
-      return;
-    }
-    const ws = new WebSocket(
-      `${binanceWsUrl}/stream?streams=btcusdt@trade/ethusdt@trade/bnbusdt@trade/xrpusdt@trade/adausdt@trade`
+  const binanceWsUrl = process.env.NEXT_PUBLIC_BINANCE_WS;
+  if (!binanceWsUrl) {
+    console.error('Binance WebSocket URL is not defined in the environment variables.');
+    return;
+  }
+
+  const ws = new WebSocket(
+    `${binanceWsUrl}/stream?streams=btcusdt@trade/ethusdt@trade/bnbusdt@trade/xrpusdt@trade/adausdt@trade`
+  );
+
+  ws.onmessage = (event) => {
+    const message = JSON.parse(event.data);
+    if (!message.data) return;
+
+    const { s: symbol, p: price } = message.data;
+    const matchedId = getCoinIdBySymbol(symbol);
+    if (!matchedId) return;
+
+    setCoins((prevCoins) =>
+      prevCoins.map((coin) => {
+        if (coin.id !== matchedId) return coin;
+
+        const oldPrice = coin.current_price;
+        const newPrice = Number.parseFloat(price);
+        const priceDiff = newPrice - oldPrice;
+
+        if (priceDiff === 0) return coin;
+
+        const randomMultiplier = Math.random() * (1.1 - 0.9) + 0.9;
+        const sign = priceDiff > 0 ? 1 : -1;
+
+        return {
+          ...coin,
+          current_price: newPrice,
+          flashColor: priceDiff > 0 ? 'green' : 'red',
+          price_change_percentage_1h_in_currency:
+            (coin.price_change_percentage_1h_in_currency ?? 0) + sign * 0.04 * randomMultiplier,
+          price_change_percentage_24h_in_currency:
+            (coin.price_change_percentage_24h_in_currency ?? 0) + sign * 0.02 * randomMultiplier,
+          price_change_percentage_7d_in_currency:
+            (coin.price_change_percentage_7d_in_currency ?? 0) + sign * 0.01 * randomMultiplier,
+          total_volume: coin.total_volume + Math.abs(priceDiff) * 12000 * randomMultiplier,
+        };
+      })
     );
-    ws.onmessage = (event) => {
-      const message = JSON.parse(event.data);
-      if (!message.data) return;
-      const { s: symbol, p: price } = message.data;
-      const matchedId = getCoinIdBySymbol(symbol);
-      if (!matchedId) return;
 
+    setTimeout(() => {
       setCoins((prevCoins) =>
-        prevCoins.map((coin) => {
-          if (coin.id !== matchedId) return coin;
-
-          const oldPrice = coin.current_price;
-          const newPrice = Number.parseFloat(price);
-          const priceDiff = newPrice - oldPrice;
-
-          if (priceDiff === 0) return coin;
-
-          const randomMultiplier = Math.random() * (1.1 - 0.9) + 0.9;
-          const sign = priceDiff > 0 ? 1 : -1;
-
-          return {
-            ...coin,
-            current_price: newPrice,
-            flashColor: priceDiff > 0 ? 'green' : 'red',
-            price_change_percentage_1h_in_currency: (coin.price_change_percentage_1h_in_currency ?? 0) + sign * 0.04 * randomMultiplier,
-            price_change_percentage_24h_in_currency: (coin.price_change_percentage_24h_in_currency ?? 0) + sign * 0.02 * randomMultiplier,
-            price_change_percentage_7d_in_currency: (coin.price_change_percentage_7d_in_currency ?? 0) + sign * 0.01 * randomMultiplier,
-            total_volume: coin.total_volume + Math.abs(priceDiff) * 12000 * randomMultiplier,
-          };
-        })
+        prevCoins.map((coin) =>
+          coin.id === matchedId ? { ...coin, flashColor: null } : coin
+        )
       );
+    }, 1200);
+  };
 
-      setTimeout(() => {
-        setCoins((prevCoins) =>
-          prevCoins.map((coin) =>
-            coin.id === matchedId ? { ...coin, flashColor: null } : coin
-          )
-        );
-      }, 1200);
-    };
-
-    return () => ws.close();
-  }, []);
+  return () => ws.close();
+}, []);
 
   const columns = useMemo<TableColumn<CoinOnWatchlist>[]>(() => [
     {
@@ -313,5 +373,3 @@ const HomeTable = ({ initialCoins }: HomeTableProps) => {
 };
 
 export default HomeTable;
-
-export {};
