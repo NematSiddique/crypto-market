@@ -191,7 +191,7 @@ const HomeTable = ({ initialCoins }: HomeTableProps) => {
           </S.NameWrapper>
         </S.LinkWrapper>
       ),
-      size: 225,
+      size: 210,
       textAlign: 'start',
     },
     {
@@ -227,7 +227,7 @@ const HomeTable = ({ initialCoins }: HomeTableProps) => {
           </span>
         );
       },
-      size: 85,
+      size: 100,
     },
     {
       header: '24h%',
@@ -241,7 +241,7 @@ const HomeTable = ({ initialCoins }: HomeTableProps) => {
           </span>
         );
       },
-      size: 85,
+      size: 100,
     },
     {
       header: '7d%',
@@ -255,18 +255,18 @@ const HomeTable = ({ initialCoins }: HomeTableProps) => {
           </span>
         );
       },
-      size: 85,
+      size: 100,
     },
     {
       header: 'Market Cap',
       accessorKey: 'market_cap',
-      size: 150,
+      size: 170,
       cell: ({ getValue }) => <div>${formatLargeValue(getValue<number>())}</div>,
     },
     {
       header: 'Volume (24h)',
       accessorKey: 'total_volume',
-      size: 150,
+      size: 170,
       cell: ({ row, getValue }) => {
         const flashColor = row.original.flashColor;
         let textColor = 'inherit';
@@ -340,7 +340,7 @@ const HomeTable = ({ initialCoins }: HomeTableProps) => {
 					</Tooltip>
 				);
 			},
-			size: 180,
+			size: 200,
 		},
     {
       header: 'Last 7 days',
