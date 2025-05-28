@@ -14,9 +14,9 @@ interface SEOProps {
 }
 
 const SEO = ({
-	title = 'Follow Your Favourite Cryptocurrencies And Tokens | CoinMarketCap 2.0',
+	title = 'CryptoMarket',
 	description = 'Build your own personalized cryptocurrency watchlist ✔️ Select from all cryptocurrencies and tokens ✔️ Follow the latest prices ✔️ BTC ✔️ ETH ✔️ BCH ✔️',
-	siteName = 'CoinMarketCap 2.0',
+	siteName = '',
 	canonical = DOMAIN,
 	ogImage = DEFAULT_OG_IMAGE,
 	ogType = 'website',
@@ -24,7 +24,7 @@ const SEO = ({
 }: SEOProps) => {
 	return (
 		<Head>
-			<title key="title">{`${title} – ${siteName}`}</title>
+			<title key="title">{`${title}  ${siteName}`}</title>
 			<meta name="description" content={description} />
 			<meta key="og_type" property="og:type" content={ogType} />
 			<meta key="og_title" property="og:title" content={title} />
