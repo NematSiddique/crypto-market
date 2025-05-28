@@ -68,7 +68,6 @@ Crypto Market is a cryptocurrency market overview application that provides live
 - **Implementation**:
   - Connects to Binance's WebSocket server.
   - Subscribes to `@ticker` streams for selected coins.
-  - Updates the Redux store dynamically without needing a full page refresh.
 
 ### CoinGecko REST API
 - **Why Used**: CoinGecko API provides comprehensive, structured cryptocurrency data including market cap, supply, volume, and historical prices, which Binance WebSocket does not provide.
