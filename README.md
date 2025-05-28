@@ -48,7 +48,7 @@ Crypto Market is a cryptocurrency market overview application that provides live
 
 3. Create a `.env` file in the root directory with the following variables:
    ```env
-   NEXT_PUBLIC_API_URL=https://api.coingecko.com/api/v3
+   API_URL=https://api.coingecko.com/api/v3
    NEXT_PUBLIC_BINANCE_WS=wss://stream.binance.com:9443/ws
    ```
 
@@ -110,12 +110,6 @@ crypto-market/
 - `npm run build`: Build the application.
 - `npm run start`: Start the production server.
 - `npm run lint`: Run code quality checks.
-
----
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
 
 ---
 
