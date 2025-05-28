@@ -3,4 +3,5 @@ import { Container } from 'styled/elements/Container';
 
 export const HeaderWrapper = styled(Container)`
 	padding-block: 30px;
+	font-size: 0.7rem;
 `;

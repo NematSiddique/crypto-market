@@ -320,7 +320,7 @@ const HomeTable = ({ initialCoins }: HomeTableProps) => {
 						<div style={{ width: '100%' }}>
 							<div className="flex items-center justify-between mb-1">
 								<span className="text-sm">{formatLargeValue(circulating)}</span>
-								<span className="text-xs uppercase text-gray-500">{symbol}</span>
+								<span className="text-xs uppercase text-gray-500"> {symbol}</span>
 							</div>
 		
 							<LinearProgress
